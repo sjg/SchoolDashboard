@@ -25,17 +25,18 @@
 </head>
 
 <body>
-		<div class="heading">
-  			<h1>Writhlington School</h1>
-			<h1>Dashboard</h1>
-		</div>
+		
 
 		<div id="realtime">
 				<div class="gridster">
 	      			<ul>
-	      				<li data-row="1" data-col="1" data-sizex="5" data-sizey="2" class="custom_class"></li> 
-	      				<li data-row="1" data-col="5" data-sizex="2" data-sizey="1"><div id="number"><div class="time"></div><br/><div id="sub">Current Time</div></li> 
+	      				<li data-row="1" data-col="1" data-sizex="4" data-sizey="2" class="custom_class"><div class="heading">
+  			<h1>Writhlington School</h1>
+			<h1>Dashboard</h1>
+		</div></li> 
+	      				
 	        			<li data-row="1" data-col="1" data-sizex="2" data-sizey="1"><div id="number"><span class="val1"></span></div><br/><div id="sub" class="sub1"></div></li> 
+	        			<li data-row="1" data-col="5" data-sizex="2" data-sizey="1"><div id="number"><div class="time"></div><br/><div id="sub">Current Time</div></li> 
 	        			<li data-row="1" data-col="3" data-sizex="2" data-sizey="1"><div id="number"><span class="val2"></span></div><br/><div id="sub" class="sub2"></div></li> 
 	        			<li data-row="2" data-col="1" data-sizex="1" data-sizey="1"><div id="number"><span class="val3"></span></div><br/><div id="sub" class="sub3"></div></li>
 	        			<li data-row="2" data-col="2" data-sizex="2" data-sizey="1"><div id="number"><span class="val4"></span></div><br/><div id="sub" class="sub4"></div></li> 
@@ -60,6 +61,14 @@
 
 
 	<script type="text/javascript">
+		// Define temp constants
+		var activeFeeds = ["1226870265", "1000993302", "2080560461", "461918509", "939747700"];
+		var feedIndex = 1;
+		var gridster;
+
+		//Define Keys to use
+		xively.setKey("");
+
 		function slabTextHeadlines() {
                		$("h1").slabText({
                			"viewportBreakpoint":380
@@ -80,6 +89,10 @@
 
 		var getData = function(feedID){
 			console.log("Getting Data");
+			if (feedID == undefined){
+				feedID = activeFeeds[feedIndex];
+			}
+
 			xively.feed.get(feedID, function (datastream) {
 				$.each(datastream.datastreams, function(key, value){
 					symbol = value.unit.symbol == "degC" ? "&deg;" : value.unit.symbol;
@@ -88,11 +101,6 @@
 				});
 			});
 		}
-
-		var activeFeeds = ["1226870265", "1000993302", "2080560461", "461918509", "939747700"]
-
-		var gridster;
-		xively.setKey("");
 
 		$(function(){
 		    gridster = $(".gridster > ul").gridster({
@@ -105,9 +113,10 @@
 		    }).data('gridster');
 
 		    getTime();
+		    getData(activeFeeds[feedIndex]);
 		    setTimeout(slabTextHeadlines, 100);
 			setInterval(getTime, 1000);
-			setInterval(getData(activeFeeds[1]), 1000 * 5);
+			setInterval(getData, 1000 * 5);
 
 
 			//Set Map
@@ -130,11 +139,7 @@
 				latitude : 51.3975829,
 				longitude : -2.351136,
 				zoom:	 13,
-				maptype: 'hybrid',
-				setStyle: { 
-					id:'Dark Night',  
-		 			style: styleOptions 
-				}
+				maptype: 'hybrid'
 			});
 		});
 

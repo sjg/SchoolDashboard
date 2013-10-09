@@ -5,10 +5,11 @@ body{
 }
 
 .heading{
-	width: 40%;
+	width: 100%;
 	font-family: 'PT Sans Narrow', sans-serif;
 	z-index: 99;
 	position: absolute;
+	text-align: center;
 }
 
 .time{
@@ -55,6 +56,7 @@ body{
 	background: black;
 	-webkit-box-shadow: 0 0 0px rgba(255,255,255,0.3);
     box-shadow: 0 0 0px rgba(255,255,255,0.3);
+    text-align: center;
 }
 
 #number{
