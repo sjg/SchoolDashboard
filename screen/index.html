@@ -34,7 +34,6 @@
   			<h1>Writhlington School</h1>
 			<h1>Dashboard</h1>
 		</div></li> 
-	      				
 	        			<li data-row="1" data-col="1" data-sizex="2" data-sizey="1"><div id="number"><span class="val1"></span></div><br/><div id="sub" class="sub1"></div></li> 
 	        			<li data-row="1" data-col="5" data-sizex="2" data-sizey="1"><div id="number"><div class="time"></div><br/><div id="sub">Current Time</div></li> 
 	        			<li data-row="1" data-col="3" data-sizex="2" data-sizey="1"><div id="number"><span class="val2"></span></div><br/><div id="sub" class="sub2"></div></li> 
@@ -87,6 +86,15 @@
 	    		$(".time").html("<p>" + hours + ":" + minutes + ":" + seconds + "</p>");
 		}
 
+		var sendData = function(){
+			var widgets = gridster.serialize()
+			$.each(widgets, function(k, v){
+				v.htmlString = $('.gridster li').eq(k).html()
+			});
+			localStorage.setItem("widgetObject", JSON.stringify(widgets, 4, null));
+			console.log(widgets);
+		}
+
 		var getData = function(feedID){
 			console.log("Getting Data");
 			if (feedID == undefined){
@@ -98,25 +106,18 @@
 					symbol = value.unit.symbol == "degC" ? "&deg;" : value.unit.symbol;
 					$(".val" + (key + 1)).html(value.current_value + symbol);
 					$(".sub" + (key + 1)).html(value.unit.label);
+					//callback(datastream);
 				});
 			});
 		}
 
 		$(function(){
-		    gridster = $(".gridster > ul").gridster({
-		        widget_margins: [10, 10],
-		        widget_base_dimensions: [140, 140],
-		        static_class: 'custom_class',
-		        draggable: {
-        			items: ".gs_w:not(.custom_class)"
-   				}
-		    }).data('gridster');
-
+		    
 		    getTime();
 		    getData(activeFeeds[feedIndex]);
 		    setTimeout(slabTextHeadlines, 100);
 			setInterval(getTime, 1000);
-			setInterval(getData, 1000 * 5);
+			setInterval(getData, 1000 * 10);
 
 
 			//Set Map
@@ -141,6 +142,34 @@
 				zoom:	 13,
 				maptype: 'hybrid'
 			});
+
+			var addRow = function(row, col, x_size, y_size, content){
+				return "<li data-row='"+row+"' data-col='"+col+"' data-sizex='"+x_size+"' data-sizey='"+y_size+"'>"+content+"</li>";
+			}
+
+			if(localStorage.getItem("widgetObject") != undefined){
+				if(localStorage.getItem("widgetObject") != ""){
+					$(".gridster").html("<ul></ul>");
+					//Look in Localstorage for the current saved grid
+					var widgetArray = JSON.parse(localStorage.getItem("widgetObject"));
+					$.each(widgetArray, function(k,v){
+						console.log(v.size_x);
+						//gridster.add_widget(v.htmlString, v.size_x, v.size_y);
+						$(".gridster ul").append(addRow(v.row,v.col,v.size_x, v.size_y, v.htmlString));
+					});
+				}
+			}
+
+			//Setup the Widgets with the relevant li's in the grid div
+			gridster = $(".gridster > ul").gridster({
+		        		widget_margins: [10, 10],
+		        		widget_base_dimensions: [140, 140],
+		        		static_class: 'custom_class',
+		        		draggable: {
+        					items: ".gs_w:not(.custom_class)"
+   						}
+		    }).data('gridster');
+
 		});
 
 	</script>
