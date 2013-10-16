@@ -25,7 +25,9 @@
 </head>
 
 <body>
-        
+        <script>
+
+        </script>
 
         <div id="realtime">
                 <div class="gridster">
@@ -57,6 +59,7 @@
     <script src="./js/jquery.slabtext.min.js"></script>
     <script src="./js/jquery.gridster.with-extras.min.js"></script>
     <script type="text/javascript" src="./js/jDistance-0.0.1.js"></script>
+    <script src='https://cdn.firebase.com/v0/firebase.js'></script>
 
 
     <script type="text/javascript">
@@ -67,6 +70,8 @@
 
         //Define Keys to use
         xively.setKey("");
+        // firebase functionality
+        var fb = new Firebase('https://distance-project.firebaseio.com');
 
         function slabTextHeadlines() {
                     $("h1").slabText({
@@ -85,16 +90,6 @@
 
                 $(".time").html("<p>" + hours + ":" + minutes + ":" + seconds + "</p>");
         }
-
-        var sendData = function(){
-            var widgets = gridster.serialize()
-            $.each(widgets, function(k, v){
-                v.htmlString = $('.gridster li').eq(k).html()
-            });
-            localStorage.setItem("widgetObject", JSON.stringify(widgets, 4, null));
-            console.log(widgets);
-        }
-
         var getData = function(feedID){
             console.log("Getting Data");
             if (feedID == undefined){
@@ -118,8 +113,6 @@
             setTimeout(slabTextHeadlines, 100);
             setInterval(getTime, 1000);
             setInterval(getData, 1000 * 10);
-
-
             //Set Map
             var styleOptions = [
                 {       
@@ -142,36 +135,34 @@
                 zoom:    13,
                 maptype: 'hybrid'
             });
-
-            var addRow = function(row, col, x_size, y_size, content){
-                return "<li data-row='"+row+"' data-col='"+col+"' data-sizex='"+x_size+"' data-sizey='"+y_size+"'>"+content+"</li>";
-            }
-
-            if(localStorage.getItem("widgetObject") != undefined){
-                if(localStorage.getItem("widgetObject") != ""){
-                    $(".gridster").html("<ul></ul>");
-                    //Look in Localstorage for the current saved grid
-                    var widgetArray = JSON.parse(localStorage.getItem("widgetObject"));
-                    $.each(widgetArray, function(k,v){
-                        console.log(v.size_x);
-                        //gridster.add_widget(v.htmlString, v.size_x, v.size_y);
-                        $(".gridster ul").append(addRow(v.row,v.col,v.size_x, v.size_y, v.htmlString));
-                    });
-                }
-            }
-
-            //Setup the Widgets with the relevant li's in the grid div
-            gridster = $(".gridster > ul").gridster({
-                        widget_margins: [10, 10],
-                        widget_base_dimensions: [140, 140],
-                        static_class: 'custom_class',
-                        draggable: {
-                            items: ".gs_w:not(.custom_class)"
-                        }
-            }).data('gridster');
-
         });
-
+        // fired on page load, then each time data changes on Firebase
+        var addRow = function(row, col, x_size, y_size, content){
+            return "<li data-row='"+row+"' data-col='"+col+"' data-sizex='"+x_size+"' data-sizey='"+y_size+"'>"+content+"</li>";
+        };
+        fb.on('value', function(snapshot){
+            console.log("Received update from Firebase");
+            $(".gridster").html("<ul></ul>");
+            $.each(snapshot.val(), function(k, v){
+                $(".gridster ul").append(addRow(v.row, v.col, v.size_x, v.size_y, v.htmlString));
+                });
+            gridster = $(".gridster > ul").gridster({
+            widget_margins: [10, 10],
+            widget_base_dimensions: [140, 140],
+            static_class: 'custom_class',
+            draggable: {
+                items: ".gs_w:not(.custom_class)",
+                stop:
+                    function(event, ui){
+                        var widgets = gridster.serialize();
+                        $.each(widgets, function(k, v){
+                        v.htmlString = $('.gridster li').eq(k).html()
+                    });
+                    fb.set(widgets)
+                    console.log("Updates sent to Firebase"); 
+                    }
+            }}).data('gridster');
+            });
     </script>
 
 </body> 
