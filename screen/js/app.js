@@ -4,7 +4,6 @@ var feedIndex = 1;
 var gridster;
 
 //Define Keys to use
-xively.setKey("5SRGqR6D7H6bkjhdwRuocYpKW0ZSXEzhgzb8U8tl07gESlI4");
 // firebase functionality
 var fb = new Firebase('https://distance-project.firebaseio.com');
 
@@ -26,6 +25,7 @@ function getTime(){
         $(".time").html("<p>" + hours + ":" + minutes + ":" + seconds + "</p>");
 }
 var getData = function(feedID){
+    xively.setKey("");
     console.log("Getting Data");
     if (feedID === undefined){
         feedID = activeFeeds[feedIndex];
