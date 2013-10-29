@@ -1,10 +1,10 @@
 // Define temp constants
-var activeFeeds = ["1226870265", "1000993302", "2080560461", "461918509", "939747700"];
+var activeFeeds = ["754702101", "1226870265", "1000993302", "2080560461", "461918509", "939747700"];
 var feedIndex = 1;
 var gridster;
 
 //Define Keys to use
-xively.setKey("");
+xively.setKey("5SRGqR6D7H6bkjhdwRuocYpKW0ZSXEzhgzb8U8tl07gESlI4");
 // firebase functionality
 var fb = new Firebase('https://distance-project.firebaseio.com');
 
