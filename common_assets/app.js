@@ -1,5 +1,5 @@
 // Define temp constants
-var activeFeeds = ["754702101", "1226870265", "1000993302", "2080560461", "461918509", "939747700"];
+var activeFeeds = ["754702101", "1226870265", "1000993302", "2080560461", "461918509", "939747700"];s
 var feedIndex = 1;
 var gridster;
 
@@ -96,4 +96,16 @@ fb.on('value', function(snapshot){
             console.log("Updates sent to Firebase");
             }
     }}).data('gridster');
+});
+// 
+            console.log(value.schoolName);
+// populate a dropdown with a JSON object containing feed details and the school name
+$(document).ready(function() {
+    $.getJSON("../common_assets/schools.json", function(data) {
+        // console.log(data);
+        $.each(data.schools, function(key, value) {
+            var option = $('<option />').val(value.activeFeeds).text(value.schoolName);
+        $("#schools").append(option);
+        });
     });
+});
