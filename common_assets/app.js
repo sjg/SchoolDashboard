@@ -47,6 +47,7 @@ $(function(){
     setTimeout(slabTextHeadlines, 100);
     setInterval(getTime, 1000);
     setInterval(getData, 1000 * 10);
+    
     //Set Map
     var styleOptions = [
         {
@@ -75,11 +76,31 @@ var addRow = function(row, col, x_size, y_size, content){
     return "<li data-row='"+row+"' data-col='"+col+"' data-sizex='"+x_size+"' data-sizey='"+y_size+"'>"+content+"</li>";
 };
 fb.on('value', function(snapshot){
+    //Hide the loading Screen
+    $('#loadingScreen').hide();
+
     console.log("Received update from Firebase");
     $(".gridster").html("<ul></ul>");
+    
+
+    //Empty Case
+    if(snapshot == undefined){
+         $('#loadingScreen').show();
+         $(".loadingText").html("Empty Dashboard");
+         $(".loadingImg").attr('src', "img/empty.png");
+    }else{
+        if(snapshot.val().length == 0){
+            $('#loadingScreen').show();
+            $(".loadingText").html("Empty Dashboard");
+            $(".loadingImg").attr('src', "img/empty.png");
+        }
+    }
+
+
     $.each(snapshot.val(), function(k, v){
         $(".gridster ul").append(addRow(v.row, v.col, v.size_x, v.size_y, v.htmlString));
-        });
+    });
+
     gridster = $(".gridster > ul").gridster({
     widget_margins: [10, 10],
     widget_base_dimensions: [140, 140],
@@ -105,7 +126,7 @@ $(document).ready(function() {
         // console.log(data);
         $.each(data.schools, function(key, value) {
             var option = $('<option />').val(value.activeFeeds).text(value.schoolName);
-        $("#schools").append(option);
+            $("#schools").append(option);
         });
     });
 });

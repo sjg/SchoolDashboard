@@ -20,6 +20,37 @@ body{
 #realtime ul, ol {
     list-style: none;
     background-color: black;
+    z-index: 1
+}
+
+#loadingScreen{
+	margin: 0 auto;
+	width: 128px;
+	text-align: center; 
+	top: 50%;
+    left: 50%;
+    width:128px;
+    height:128px;
+    margin-top: 20%;
+    z-index: 99
+}
+
+#loadingScreen p{
+	font-family: 'PT Sans Narrow', sans-serif;
+	text-align: center; 
+	margin-top: 10px;
+}
+
+#toolbox{
+	position:absolute;
+	top:0;
+	right:0;
+	z-index: 99;
+	-webkit-filter: brightness(300%); 
+}
+
+.loadingImg{
+	-webkit-filter: brightness(10000%); 
 }
 
 .gridster {
@@ -85,3 +116,39 @@ body{
 	height: 82%;
 	background-color: white;
 }
+
+/*  Add modal code */
+.modal{
+	color: #000;
+}
+
+.modal-add{
+	width: 900px;
+    /* must be half of the width, minus scrollbar on the left (30px) */
+    margin-left: -450px;
+}
+
+.first-column {
+  width: 50%;
+  float: left;
+}
+
+.second-column {
+  width: 50%;
+  float: right;
+}
+
+.colSelect{
+	height: 200px;
+	background-color: #fff;
+}
+
+.withborder{
+	border: 1px black solid;
+}
+
+.typeSelectable { background-color: #fff; height: 200px; overflow:scroll;}
+.typeSelectable .ui-selecting { background: #FECA40; }
+.typeSelectable .ui-selected { background: #F39814; color: white; }
+.typeSelectable { list-style-type: none; margin: 0; padding: 0; width: 100%; }
+.typeSelectable li { margin: 3px; padding: 0.4em; height: 18px; }

@@ -1,0 +1,43 @@
+{
+	"widgetList": [
+		{
+			"name" : "Title",
+			"widgets" : [
+				{ 
+					"name": "Date and Time Widget",
+					"size_x": 2,
+					"size_y": 1,
+					"updateFunction": "setupDate",
+					"innerHTML": "<div id='number'><div class='time'></div><br/><div id='sub'>Current Time</div>"
+				},
+				{ 
+					"name": "Title Widget",
+					"size_x": 4,
+					"size_y": 4,
+					"updateFunction": "setupTitle",
+					"innerHTML": "<div class='heading'><h1 class='titleText'></h1><h1>Dashboard</h1></div>"
+				}
+			]
+		},
+		{
+			"name" : "Aggregation",
+			"widgets" : [
+				{ 
+					"name": "Wind Map",
+					"size_x": 2,
+					"size_y": 1,
+					"updateFunction": "setupDate",
+					"innerHTML": "<div id='number'><div class='time'></div><br/><div id='sub'>Current Time</div>"
+				},
+				{ 
+					"name": "Heat Map",
+					"size_x": 4,
+					"size_y": 4,
+					"updateFunction": "setupTitle",
+					"innerHTML": "<div class='heading'><h1 class='titleText'></h1><h1>Dashboard</h1></div>"
+				}
+			]
+		}
+		
+	]
+}
