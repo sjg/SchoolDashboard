@@ -1,7 +1,7 @@
 {
 	"widgetList": [
 		{
-			"name" : "Title",
+			"name" : "CASA-Widgets",
 			"widgets" : [
 				{ 
 					"name": "Date and Time Widget",

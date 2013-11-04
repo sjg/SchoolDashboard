@@ -31,9 +31,9 @@ $(document).ready(function() {
 		console.log($(this).parent());
 	});
 
-	$(".widgetClose").live(function(){
-		console.log($(this).parent());
-	});
+	// $(".widgetClose").live(function(){
+	// 	console.log($(this).parent());
+	// });
 
 	//$( ".typeSelectable" ).selectable();
 
