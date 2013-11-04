@@ -28,14 +28,38 @@ $(document).ready(function() {
 	});
 
 	$(document).on("click", ".widgetClose", function(){
-		console.log($(this).parent());
+		// console.log($(this).parent().parent().id);
+		// console.log($(this).parent()[0].id);
+		var clickedWidget = $(this).parent()[0];
+		$.each($('.gridster li'), function(k,v){
+			if($(v).attr("id") === clickedWidget.id){
+				console.log("found: " + k);
+				gridster.remove_widget($(clickedWidget), function(callback){
+					//Send to firebase
+                    var widgets = gridster.serialize();
+                    $.each(widgets, function(k, v){
+                    	//Remove close button from widgets
+                    	$('.gridster li').eq(k).find(".widgetClose").remove();
+                        v.htmlString = $('.gridster li').eq(k).html();
+                    });
+                    
+                    fb.set(
+                            {
+                                results: 
+                                [
+                                        {
+                                            school_id: getUrlVars()["s"],
+                                            widgets: widgets
+                                        }
+                                ]
+                            }
+                    );
+                    console.log("Removed item - Updates sent to Firebase");
+                    
+				});
+			}
+		});
 	});
-
-	// $(".widgetClose").live(function(){
-	// 	console.log($(this).parent());
-	// });
-
-	//$( ".typeSelectable" ).selectable();
 
 	$("#standardButton").click( function(){
 		//Clear list

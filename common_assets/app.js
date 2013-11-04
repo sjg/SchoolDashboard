@@ -84,8 +84,8 @@ $(function(){
     });
 });
 // fired on page load, then each time data changes on Firebase
-var addRow = function(row, col, x_size, y_size, content){
-    return "<li data-feedid='foo' data-streamid='bar' data-row='"+row+"' data-col='"+col+"' data-sizex='"+x_size+"' data-sizey='"+y_size+"'>"+content+"</li>";
+var addRow = function(id, row, col, x_size, y_size, content){
+    return "<li id='"+id+"' data-feedid='foo' data-streamid='bar' data-row='"+row+"' data-col='"+col+"' data-sizex='"+x_size+"' data-sizey='"+y_size+"'>"+content+"</li>";
 };
 
 fb.on('value', function(snapshot){
@@ -113,7 +113,7 @@ fb.on('value', function(snapshot){
                 }
             }
             $.each(schooldata, function(k, v){
-                $(".gridster ul").append(addRow(v.row, v.col, v.size_x, v.size_y, v.htmlString));
+                $(".gridster ul").append(addRow("w"+k, v.row, v.col, v.size_x, v.size_y, v.htmlString));
             });
             gridster = $(".gridster > ul").gridster({
             widget_margins: [10, 10],
@@ -125,14 +125,21 @@ fb.on('value', function(snapshot){
                     function(event, ui){
                         var widgets = gridster.serialize();
                         $.each(widgets, function(k, v){
-                        v.htmlString = $('.gridster li').eq(k).html();
-                    });
-                    fb.set(
-                        {results: [{
-                            school_id: getUrlVars()["s"],
-                            widgets: widgets
-                        }]});
-                    console.log("Updates sent to Firebase");
+                            v.htmlString = $('.gridster li').eq(k).html();
+                        });
+                        
+                        fb.set(
+                                {
+                                    results: 
+                                    [
+                                            {
+                                                school_id: getUrlVars()["s"],
+                                                widgets: widgets
+                                            }
+                                    ]
+                                }
+                        );
+                        console.log("Updates sent to Firebase");
                     }
             }}).data('gridster');
         }
