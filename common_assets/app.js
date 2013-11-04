@@ -41,11 +41,10 @@ function getTime(){
         $(".time").html("<p>" + hours + ":" + minutes + ":" + seconds + "</p>");
 }
 var getData = function(feedID){
-    console.log("Getting Data");
+    console.log("Getting Data from Xively");
     if (feedID === undefined){
         feedID = activeFeeds[feedIndex];
     }
-
     xively.feed.get(feedID, function (datastream) {
         $.each(datastream.datastreams, function(key, value){
             symbol = value.unit.symbol == "degC" ? "&deg;" : value.unit.symbol;
@@ -77,7 +76,6 @@ $(function(){
         { featureType: "poi",  elementType: "all",    stylers: [ { visibility: "off" } ] },
         { featureType: "road", elementType: "all",    stylers: [ { visibility: "off" } ] }
     ];
-
     jQuery("#map").Distance({
         type:    'map',
         latitude : 51.3975829,
@@ -88,7 +86,7 @@ $(function(){
 });
 // fired on page load, then each time data changes on Firebase
 var addRow = function(row, col, x_size, y_size, content){
-    return "<li data-row='"+row+"' data-col='"+col+"' data-sizex='"+x_size+"' data-sizey='"+y_size+"'>"+content+"</li>";
+    return "<li data-feedid='foo' data-streamid='bar' data-row='"+row+"' data-col='"+col+"' data-sizex='"+x_size+"' data-sizey='"+y_size+"'>"+content+"</li>";
 };
 fb.on('value', function(snapshot){
     //Hide the loading Screen
@@ -113,6 +111,7 @@ fb.on('value', function(snapshot){
 
 
     $.each(snapshot.val(), function(k, v){
+        console.log("key: " + k +" value: " + v);
         $(".gridster ul").append(addRow(v.row, v.col, v.size_x, v.size_y, v.htmlString));
     });
 
@@ -142,4 +141,5 @@ $(document).ready(function() {
             $("#schools").append(option);
         });
     });
+    // now, get feed ID and streams
 });
