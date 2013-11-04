@@ -90,9 +90,11 @@ var addRow = function(row, col, x_size, y_size, content){
 
 fb.on('value', function(snapshot){
     var msgdata = snapshot.val().results;
+    var found = 0;
     $.each(msgdata, function(k, v) {
         if (v.school_id == getUrlVars()["s"]) {
             schooldata = v.widgets;
+            found = 1;
 
             //Hide the loading Screen
             $('#loadingScreen').hide();
@@ -134,6 +136,14 @@ fb.on('value', function(snapshot){
                     }
             }}).data('gridster');
         }
+
+        if(!found){
+            // If we get here then dashboard doesn't exist
+            $('#loadingScreen').show();
+            $(".loadingText").html("Dashboard not found");
+            $(".loadingImg").attr('src', "img/empty.png");
+        }
+
     });
 });
 
