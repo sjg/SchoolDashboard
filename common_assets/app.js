@@ -133,12 +133,10 @@ fb.on('value', function(snapshot){
             }
     }}).data('gridster');
 });
-// 
-            console.log(value.schoolName);
+
 // populate a dropdown with a JSON object containing feed details and the school name
 $(document).ready(function() {
     $.getJSON("../common_assets/schools.json", function(data) {
-        // console.log(data);
         $.each(data.schools, function(key, value) {
             var option = $('<option />').val(value.activeFeeds).text(value.schoolName);
             $("#schools").append(option);
