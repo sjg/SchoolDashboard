@@ -75,13 +75,6 @@ $(function(){
         { featureType: "poi",  elementType: "all",    stylers: [ { visibility: "off" } ] },
         { featureType: "road", elementType: "all",    stylers: [ { visibility: "off" } ] }
     ];
-    jQuery("#map").Distance({
-        type:    'map',
-        latitude : 51.3975829,
-        longitude : -2.351136,
-        zoom:    13,
-        maptype: 'hybrid'
-    });
 });
 // fired on page load, then each time data changes on Firebase
 var addRow = function(id, row, col, x_size, y_size, content){
