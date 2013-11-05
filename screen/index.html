@@ -74,8 +74,7 @@
                 <h4 class="modal-title">Add Widget</h4>
               </div>
               <div class="modal-body">
-                <p></p>
-
+            
                 <div class="row-fluid">
                     <div class="span4">
                         <label>Widget Type</label>
@@ -95,8 +94,7 @@
                     <div class="span4">
                         <label class="dynamicStep3">Widgets Preview</label>
                         <div class="colSelect withborder">
-                            <ol class="typeSelectable step3List">
-
+                            <ol class="typeSelectableLast step3List">
                             </ol>
                         </div>
                     </div>
@@ -104,13 +102,15 @@
                 </div>
 
                 <hr/>
-                <div class="row-fluid">
+                <div id="widgetPreview" class="row-fluid" style="display=none">
                      <label>Widget Preview</label>
+                     <div id="widgetPreviewArea"></div>
                 </div>
 
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="addWidgetButton" type="button" class="btn btn-primary" disabled>Add Widget</button>
               </div>
             </div>
           </div>

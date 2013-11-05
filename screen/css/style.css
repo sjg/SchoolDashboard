@@ -73,7 +73,7 @@ body{
     box-shadow: 0 0 5px rgba(255,255,255,0.3);
 }
 
-.gridster .player {
+.gridster  .player {
     -webkit-box-shadow: 3px 3px 5px rgba(255,255, 255,0.3);
     box-shadow: 3px 3px 5px rgba(255,255, 255,0.3);
 }
@@ -89,6 +89,53 @@ body{
 	-webkit-box-shadow: 0 0 0px rgba(255,255,255,0.3);
     box-shadow: 0 0 0px rgba(255,255,255,0.3);
     text-align: center;
+}
+
+.gridsterPreview {
+    width: 100%;
+    margin: 0 auto;
+
+    opacity: .8;
+
+    -webkit-transition: opacity .6s;
+    -moz-transition: opacity .6s;
+    -o-transition: opacity .6s;
+    -ms-transition: opacity .6s;
+    transition: opacity .6s;
+}
+
+.gridsterPreview .gs_w {
+    background: #33302B;
+    cursor: pointer;
+    -webkit-box-shadow: 0 0 5px rgba(255,255,255,0.3);
+    box-shadow: 0 0 5px rgba(255,255,255,0.3);
+}
+
+.gridsterPreview  .player {
+    -webkit-box-shadow: 3px 3px 5px rgba(255,255, 255,0.3);
+    box-shadow: 3px 3px 5px rgba(255,255, 255,0.3);
+}
+
+.gridsterPreview .preview-holder {
+    border: none!important;
+    border-radius: 0!important;
+    background: rgba(255,255,255,.2)!important;
+}
+
+.gridsterPreview .custom_class{
+	background: black;
+	-webkit-box-shadow: 0 0 0px rgba(255,255,255,0.3);
+    box-shadow: 0 0 0px rgba(255,255,255,0.3);
+    text-align: center;
+}
+
+#widgetPreview ul, ol {
+    list-style: none;
+}
+
+
+#widgetPreview{
+	height: 200px;
 }
 
 #number{
@@ -130,6 +177,10 @@ body{
 	color: #000;
 }
 
+.modal-body {
+    max-height: 800px;
+}
+
 .modal-add{
 	width: 900px;
     /* must be half of the width, minus scrollbar on the left (30px) */
@@ -160,3 +211,9 @@ body{
 .typeSelectable .ui-selected { background: #F39814; color: white; }
 .typeSelectable { list-style-type: none; margin: 0; padding: 0; width: 100%; }
 .typeSelectable li { margin: 3px; padding: 0.4em; height: 18px; }
+
+.typeSelectableLast { background-color: #fff; height: 200px; overflow:scroll;}
+.typeSelectableLast .ui-selecting { background: #FECA40; }
+.typeSelectableLast .ui-selected { background: #F39814; color: white; }
+.typeSelectableLast { list-style-type: none; margin: 0; padding: 0; width: 100%; }
+.typeSelectableLast li { margin: 3px; padding: 0.4em; height: 18px; }

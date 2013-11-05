@@ -7,10 +7,12 @@ var editToggle = 0;
 $(document).ready(function() {
 	$("#addButton").click( function(){
 		$('#addModal').modal('toggle');
+		$("#widgetPreview").hide();
 	}); 
 
 	$("#editButton").click( function(){
 		$('#addModal').modal('hide');
+		$("#widgetPreview").hide();
 		
 		if(editToggle == 1){
 			$.each($('.gridster li'), function(k,v){
@@ -65,6 +67,10 @@ $(document).ready(function() {
 		//Clear list
 		$(".step2List").html("");
 		$(".step3List").html("");
+		$("#widgetPreview").hide();
+
+		$("#addWidgetButton").attr('disabled', 'disabled').addClass('disabled');
+
 		$(".dynamicStep3").html("Preview");
 		$.getJSON(components, function(data) {
 			$.each(data.widgetList, function(k, v){
@@ -77,6 +83,10 @@ $(document).ready(function() {
 		//Clear list
 		$(".step2List").html("");
 		$(".step3List").html("");
+		$("#widgetPreview").hide();
+
+		$("#addWidgetButton").attr('disabled', 'disabled').addClass('disabled');
+
 		$(".dynamicStep3").html("Stream");
 		$.getJSON(ios_feeds_url, function(data) {
 			
@@ -113,12 +123,15 @@ $(document).ready(function() {
 	$(".typeSelectable").selectable({ 
 		selected: function( event, ui ) {
 
+			$("#addWidgetButton").attr('disabled', 'disabled').addClass('disabled'); 
+
 			var feedID = $("#" + ui.selected.id).attr("data-feedID");
 			var type = $("#" + ui.selected.id).attr("data-type");
 			
 			console.log('Selected feedID: ' + feedID);
 			console.log("Selected type: " + type);
  
+ 			$("#widgetPreview").hide();
 
 			if(type == "remote"){
 				if(xively != undefined){
@@ -149,6 +162,38 @@ $(document).ready(function() {
   		}
 	});
 
+	$(".typeSelectableLast").selectable({
+		selected: function( event, ui ) {
+			$("#widgetPreview").show();
+			setTimeout(function(){
+				//Render the Preview Widget
+				console.log($("#" + ui.selected.id));
+
+				$("#" + ui.selected.id).attr("")
+
+				$("#widgetPreviewArea").html("");
+				$("#widgetPreviewArea").append("<div class='gridsterPreview'><ul></ul></div>");
+
+				$(".gridsterPreview ul").append(addRow("w"+99, 0, 0, 2, 1, '<div id="number">12g</div><br/><div id="sub">Preview Text</div>'));
+
+
+
+				//Create Preview Gridster
+				var gridsterPreview = $(".gridsterPreview > ul").gridster({
+		            widget_margins: [10, 10],
+		            widget_base_dimensions: [140, 140],
+		            static_class: 'custom_class'
+	           	}).data('gridsterPreview');
+
+
+	           	$("#addWidgetButton").button("Add Widget");
+			}, 550);
+		}
+	});
+
+	$("#addWidgetButton").click(function(){
+		$('#addModal').modal('toggle');
+	});
 
 
 
