@@ -7,11 +7,11 @@ var editToggle = 0;
 $(document).ready(function() {
 	$("#addButton").click( function(){
 		$('#addModal').modal('toggle');
-	}); 
+	});
 
 	$("#editButton").click( function(){
 		$('#addModal').modal('hide');
-		
+
 		if(editToggle == 1){
 			$.each($('.gridster li'), function(k,v){
 				$(this).find(".widgetClose").remove();
@@ -38,14 +38,13 @@ $(document).ready(function() {
 					//Send to firebase
                     var widgets = gridster.serialize();
                     $.each(widgets, function(k, v){
-                    	//Remove close button from widgets
-                    	$('.gridster li').eq(k).find(".widgetClose").remove();
+                    //Remove close button from widgets
+                        $('.gridster li').eq(k).find(".widgetClose").remove();
                         v.htmlString = $('.gridster li').eq(k).html();
                     });
-                    
                     fb.set(
                             {
-                                results: 
+                                results:
                                 [
                                         {
                                             school_id: getUrlVars()["s"],
@@ -55,12 +54,10 @@ $(document).ready(function() {
                             }
                     );
                     console.log("Removed item - Updates sent to Firebase");
-                    
 				});
 			}
 		});
 	});
-
 	$("#standardButton").click( function(){
 		//Clear list
 		$(".step2List").html("");
@@ -72,14 +69,12 @@ $(document).ready(function() {
 			});
 		});
 	});
-
 	$("#portalButton").click( function(){
 		//Clear list
 		$(".step2List").html("");
 		$(".step3List").html("");
 		$(".dynamicStep3").html("Stream");
 		$.getJSON(ios_feeds_url, function(data) {
-			
 			//Loop around to remove frozen data
 			var itemArray = data.items;
 			var liveItems = new Array();
@@ -110,16 +105,14 @@ $(document).ready(function() {
 	});
 
 	//Selectable Event Trigger -- Second List Select
-	$(".typeSelectable").selectable({ 
+	$(".typeSelectable").selectable({
 		selected: function( event, ui ) {
 
 			var feedID = $("#" + ui.selected.id).attr("data-feedID");
 			var type = $("#" + ui.selected.id).attr("data-type");
-			
+
 			console.log('Selected feedID: ' + feedID);
 			console.log("Selected type: " + type);
- 
-
 			if(type == "remote"){
 				if(xively != undefined){
 					xively.feed.get(feedID, function (datastream) {
@@ -146,10 +139,6 @@ $(document).ready(function() {
 					});
 				});
 			}
-  		}
+		}
 	});
-
-
-
-
 });

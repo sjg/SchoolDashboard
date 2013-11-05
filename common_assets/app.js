@@ -6,7 +6,7 @@ var gridster;
 //Define Keys to use
 xively.setKey("5SRGqR6D7H6bkjhdwRuocYpKW0ZSXEzhgzb8U8tl07gESlI4");
 // firebase functionality
-var fb = new Firebase('https://distance-project.firebaseio.com');
+var fb = new Firebase('https://distance-project.firebaseio.com/schools/' + getUrlVars()['s']);
 
 
 function getUrlVars() {
@@ -89,13 +89,13 @@ var addRow = function(id, row, col, x_size, y_size, content){
 };
 
 fb.on('value', function(snapshot){
-    var msgdata = snapshot.val().results;
+    var msgdata = snapshot.val();
     var found = 0;
     $.each(msgdata, function(k, v) {
-        if (v.school_id == getUrlVars()["s"]) {
-            schooldata = v.widgets;
+        // console.log(v);
+        if (v == getUrlVars()["s"]) {
+            schooldata = msgdata.widgets;
             found = 1;
-
             //Hide the loading Screen
             $('#loadingScreen').hide();
             console.log("Received update from Firebase");
@@ -127,18 +127,8 @@ fb.on('value', function(snapshot){
                         $.each(widgets, function(k, v){
                             v.htmlString = $('.gridster li').eq(k).html();
                         });
-                        
-                        fb.set(
-                                {
-                                    results: 
-                                    [
-                                            {
-                                                school_id: getUrlVars()["s"],
-                                                widgets: widgets
-                                            }
-                                    ]
-                                }
-                        );
+                        fb_widgets = fb.child('widgets');
+                        fb_widgets.set(widgets);
                         console.log("Updates sent to Firebase");
                     }
             }}).data('gridster');
