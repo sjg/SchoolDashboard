@@ -1,14 +1,8 @@
 Options +FollowSymLinks
 Options +Indexes
 
-<<<<<<< HEAD
-RewriteBase /
-
-RewriteRule ^dashboard/([A-Za-z0-9]+)$ index.html?s=$1
-=======
 <IfModule mod_rewrite.c>
 	RewriteEngine On
 	RewriteBase /
 	RewriteRule ^dashboard/([A-Za-z0-9]+)$ index.html?s=$1
 </IfModule>
->>>>>>> 697fa6dd25d4a41cbc2f9529077525498a510f26
