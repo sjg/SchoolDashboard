@@ -45,17 +45,9 @@ $(document).ready(function() {
                         v.htmlString = $('.gridster li').eq(k).html();
                     });
                     
-                    fb.set(
-                            {
-                                results: 
-                                [
-                                        {
-                                            school_id: getUrlVars()["s"],
-                                            widgets: widgets
-                                        }
-                                ]
-                            }
-                    );
+                    fb_widgets = fb.child('widgets');
+                    fb_widgets.set(widgets);
+                    
                     console.log("Removed item - Updates sent to Firebase");
                     
 				});
