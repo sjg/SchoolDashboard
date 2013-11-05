@@ -1,0 +1,7 @@
+Options +FollowSymLinks
+Options +Indexes
+RewriteEngine On
+
+RewriteBase /
+
+RewriteRule ^dashboard/([A-Za-z0-9]+)$ v1/index.html?s=$1
