@@ -132,6 +132,13 @@ fb.on('value', function(snapshot){
                         console.log("Updates sent to Firebase");
                     }
             }}).data('gridster');
+            jQuery("#map").Distance({
+                type:    'map',
+                latitude : 51.3975829,
+                longitude : -2.351136,
+                zoom:    13,
+                maptype: 'terrain'
+            });
         }
 
         if(!found){
