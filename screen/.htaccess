@@ -4,4 +4,4 @@ RewriteEngine On
 
 RewriteBase /
 
-RewriteRule ^dashboard/([A-Za-z0-9]+)$ v1/index.html?s=$1
+RewriteRule ^dashboard/([A-Za-z0-9]+)$ index.html?s=$1
