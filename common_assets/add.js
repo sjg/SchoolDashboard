@@ -24,7 +24,7 @@ $(document).ready(function() {
 				editToggle = 1;
 				gridster.disable();
 			});
-		};
+		}
 	});
 
 	$(document).on("click", ".widgetClose", function(){
@@ -42,17 +42,8 @@ $(document).ready(function() {
                         $('.gridster li').eq(k).find(".widgetClose").remove();
                         v.htmlString = $('.gridster li').eq(k).html();
                     });
-                    fb.set(
-                            {
-                                results:
-                                [
-                                        {
-                                            school_id: getUrlVars()["s"],
-                                            widgets: widgets
-                                        }
-                                ]
-                            }
-                    );
+                    fb_widgets = fb.child('widgets');
+                    fb_widgets.set(widgets);
                     console.log("Removed item - Updates sent to Firebase");
 				});
 			}
@@ -87,7 +78,7 @@ $(document).ready(function() {
 							//Found frozen item -- remove item k from list
 							liveItems.push(v);
 						}
-					};
+					}
 				});
 			});
 
