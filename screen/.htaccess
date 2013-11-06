@@ -3,6 +3,7 @@ Options +Indexes
 
 <IfModule mod_rewrite.c>
 	RewriteEngine On
-	RewriteBase /
-	RewriteRule ^dashboard/([A-Za-z0-9]+)$ index.html?s=$1
+	RewriteBase /SchoolDashboard/screen/
+
+	#RewriteRule ^([A-Za-z0-9]+)$ index.html?id=$1
 </IfModule>

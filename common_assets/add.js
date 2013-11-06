@@ -157,6 +157,7 @@ $(document).ready(function() {
 	$(".typeSelectableLast").selectable({
 		selected: function( event, ui ) {
 			$("#widgetPreview").show();
+			$("#addWidgetButton").button("Add Widget");
 			setTimeout(function(){
 				//Render the Preview Widget
 				console.log($("#" + ui.selected.id));

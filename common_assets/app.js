@@ -76,6 +76,7 @@ $(function(){
         { featureType: "road", elementType: "all",    stylers: [ { visibility: "off" } ] }
     ];
 });
+
 // fired on page load, then each time data changes on Firebase
 var addRow = function(id, row, col, x_size, y_size, content){
     return "<li id='"+id+"' data-feedid='foo' data-streamid='bar' data-row='"+row+"' data-col='"+col+"' data-sizex='"+x_size+"' data-sizey='"+y_size+"'>"+content+"</li>";
@@ -125,6 +126,7 @@ fb.on('value', function(snapshot){
                         console.log("Updates sent to Firebase");
                     }
             }}).data('gridster');
+	    gridster.enable();
             jQuery("#map").Distance({
                 type:    'map',
                 latitude : 51.3975829,
