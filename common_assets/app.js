@@ -126,7 +126,7 @@ fb.on('value', function(snapshot){
                         console.log("Updates sent to Firebase");
                     }
             }}).data('gridster');
-	    gridster.enable();
+        gridster.enable();
             jQuery("#map").Distance({
                 type:    'map',
                 latitude : 51.3975829,
