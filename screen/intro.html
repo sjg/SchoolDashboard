@@ -164,7 +164,6 @@
 
 		//Add the delete handler
 		$(".delete").click(function() {
-                	console.log($(this).attr("class").replace('delete ', ''));
 			var delID = $(this).attr("class").replace('delete ', '');
 
 			// Set the ID to delete
@@ -181,7 +180,7 @@
 
 				var checkDel = new Firebase('https://distance-project.firebaseio.com/schools/' + deleteID + "/password" );
 				checkDel.on('value', function(sshot) {
-					if(sshot.val().toString() === CryptoJS.SHA3($("#delPasswordCheck").val(), { outputLength: 256 }).toString() ){
+					if(sshot.val() === CryptoJS.SHA3($("#delPasswordCheck").val(), { outputLength: 256 }).toString() ){
 						fbase.child(deleteID).remove(function(error){
                                         		if(!error){
                                                 		$("#deleteModal").modal('hide');
