@@ -117,9 +117,14 @@ fb.on('value', function(snapshot){
                         console.log("Updates sent to Firebase");
                     }
             }}).data('gridster');
+<<<<<<< HEAD
 	    gridster.enable();
             slabTextHeadlines();
 	    jQuery("#map").Distance({
+=======
+        gridster.enable();
+            jQuery("#map").Distance({
+>>>>>>> 94b01c7b6fae4efd5a24564c3241b4f2300fb06b
                 type:    'map',
                 latitude : 51.3975829,
                 longitude : -2.351136,
