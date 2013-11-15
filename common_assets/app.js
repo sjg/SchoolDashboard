@@ -9,20 +9,6 @@ xively.setKey("5SRGqR6D7H6bkjhdwRuocYpKW0ZSXEzhgzb8U8tl07gESlI4");
 var fb = new Firebase('https://distance-project.firebaseio.com/schools/' + getUrlVars()['s']);
 
 
-function getUrlVars() {
-    // use: var school = getUrlVars()["s"];
-    var vars = [], hash;
-    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-    for(var i = 0; i < hashes.length; i++)
-    {
-        hash = hashes[i].split('=');
-        vars.push(hash[0]);
-        vars[hash[0]] = hash[1];
-    }
-    return vars;
-}
-
-
 function slabTextHeadlines() {
             $("h1").slabText({
                 "viewportBreakpoint":380
@@ -86,8 +72,13 @@ fb.on('value', function(snapshot){
     var msgdata = snapshot.val();
     var found = 0;
     $.each(msgdata, function(k, v) {
-        // console.log(v);
-        if (v == getUrlVars()["s"]) {
+        console.log("Value:" + v);
+	console.log("Key: " + k);
+	console.log(snapshot.name().toLowerCase());
+	console.log((getUrlVars()["s"]).toLowerCase());
+	console.log( snapshot.name().toLowerCase() == (getUrlVars()["s"]).toLowerCase() );
+
+        if ( snapshot.name().toLowerCase() == (getUrlVars()["s"]).toLowerCase() ) {
             schooldata = msgdata.widgets;
             found = 1;
             //Hide the loading Screen
@@ -127,7 +118,8 @@ fb.on('value', function(snapshot){
                     }
             }}).data('gridster');
 	    gridster.enable();
-            jQuery("#map").Distance({
+            slabTextHeadlines();
+	    jQuery("#map").Distance({
                 type:    'map',
                 latitude : 51.3975829,
                 longitude : -2.351136,
@@ -142,7 +134,6 @@ fb.on('value', function(snapshot){
             $(".loadingText").html("Dashboard not found");
             $(".loadingImg").attr('src', "img/empty.png");
         }
-
     });
 });
 

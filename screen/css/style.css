@@ -23,6 +23,10 @@ body{
     z-index: 1
 }
 
+li {
+    list-style: none;
+}
+
 #loadingScreen{
 	margin: 0 auto;
 	width: 128px;
