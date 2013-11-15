@@ -27,6 +27,14 @@ li {
     list-style: none;
 }
 
+.control-label{
+	margin-right: 10px;
+}
+
+.form-control{
+	width: 50%;
+}
+
 #loadingScreen{
 	margin: 0 auto;
 	width: 128px;
