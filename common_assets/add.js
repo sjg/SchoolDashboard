@@ -139,6 +139,7 @@ $(document).ready(function() {
             }
         }
     });
+
     $(".typeSelectableLast").selectable({
         selected: function( event, ui ) {
             $("#widgetPreview").show();
@@ -160,6 +161,7 @@ $(document).ready(function() {
             }, 550);
         }
     });
+
     $("#addWidgetButton").click(function(){
         $('#addModal').modal('toggle');
     });

@@ -1,5 +1,17 @@
+var Sensor = function sensor(feedID, streamID, elementID){
+    this.feed = feedID;
+    this.stream = streamID;
+    this.elementID = elementID;
+    this.functionName = undefined;
+} 
+
+var XivelyStreamArray = new Array();
+
+//Fake the data
+XivelyStreamArray[0] = new Sensor(1090954378, 430618, "#w3");
+
 // Define temp constants
-var activeFeeds = ["754702101", "1226870265", "1000993302", "2080560461", "461918509", "939747700"];
+var activeFeeds;
 var feedIndex = 1;
 var gridster;
 
@@ -7,7 +19,6 @@ var gridster;
 xively.setKey("5SRGqR6D7H6bkjhdwRuocYpKW0ZSXEzhgzb8U8tl07gESlI4");
 // firebase functionality
 var fb = new Firebase('https://distance-project.firebaseio.com/schools/' + getUrlVars()['s']);
-
 
 function slabTextHeadlines() {
             $("h1").slabText({
@@ -26,28 +37,52 @@ function getTime(){
 
         $(".time").html("<p>" + hours + ":" + minutes + ":" + seconds + "</p>");
 }
-var getData = function(feedID){
-    console.log("Getting Data from Xively");
-    if (feedID === undefined){
-        feedID = activeFeeds[feedIndex];
+
+var getData = function(sensorObject){
+    if (sensorObject === undefined){
+        return false;
     }
-    xively.feed.get(feedID, function (datastream) {
+    if (sensorObject.feed === undefined){
+        return false;
+    }
+
+    console.log("Getting Data from Xively");
+    xively.feed.get(sensorObject.feed, function (datastream) {
         $.each(datastream.datastreams, function(key, value){
-            symbol = value.unit.symbol == "degC" ? "&deg;" : value.unit.symbol;
-            $(".val" + (key + 1)).html(value.current_value + symbol);
-            $(".sub" + (key + 1)).html(value.unit.label);
-            //callback(datastream);
+            if(value.id == sensorObject.stream){
+                console.log(value); 
+                symbol = value.unit.symbol == "degC" ? "&deg;" : value.unit.symbol;
+                $(sensorObject.elementID).find("#number").find(".val").html(value.current_value + symbol);
+                $(sensorObject.elementID).find("#sub").html(value.current_value + symbol);
+                $(sensorObject.elementID).find("#sub").html(value.unit.label);
+            }
         });
     });
 };
 
+var streamLoop = function(){
+    if (XivelyStreamArray.length == 0){ 
+        return false 
+    };
+    $.each(XivelyStreamArray,function(k,v){
+        // Loop around Stream Array adding values when needed to elements
+        console.log(v);
+        getData(v);
+    });
+    return true;
+}
+
 $(function(){
     getTime();
-    getData(activeFeeds[feedIndex]);
+    streamLoop();
+
     setTimeout(slabTextHeadlines, 100);
+    
     setInterval(getTime, 1000);
-    setInterval(getData, 1000 * 10);
-    //Set Map
+    // Set up the interval for looping around the stream array
+    setInterval(streamLoop, 1000 * 10);
+
+    //Set Map Style
     var styleOptions = [
         {
             featureType: 'all',
@@ -72,7 +107,7 @@ fb.on('value', function(snapshot){
     var msgdata = snapshot.val();
     var found = 0;
     $.each(msgdata, function(k, v) {
-        console.log("Value:" + v);
+    console.log("Value:" + v);
 	console.log("Key: " + k);
 	console.log(snapshot.name().toLowerCase());
 	console.log((getUrlVars()["s"]).toLowerCase());
