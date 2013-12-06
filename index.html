@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Schools Dashboard - Main Screen</title>
+    <title>Schools Dashboard - Select Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link href="./css/bootstrap.min.css" rel="stylesheet" />
@@ -10,7 +10,6 @@
     <link href="./css/slabtext.css" rel="stylesheet" type="text/css" />
     <link href="./css/style.css" rel="stylesheet" type="text/css" />
     <link href="./css/jquery.gridster.min.css" rel="stylesheet" />
-
 
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
     <link href='http://fonts.googleapis.com/css?family=Droid+Sans|Ubuntu:700|PT+Sans+Narrow:400,700' rel='stylesheet' type='text/css'>
@@ -27,104 +26,227 @@
     <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
 </head>
 
+
 <body>
-        <div id="toolbox">
-            <img id="editButton" src="img/edit.png" width="32"/>
+	<div id="title" style="display: none;">
+		<h2>Select a Dashboard</h2>
+	</div>
+
+        <div id="loadingScreen">
+        	<img class="loadingImg" src="img/loading.gif" width="64"/>
+        	<p class='loadingText'>Loading List</p>
+        </div>
+	
+	<div id="toolbox" style="display: none;">
             <img id="addButton" src="img/add.png" width="32"/>
-        </div>
+        </div>	
 
-        <div id="realtime">
-                <div id="loadingScreen"> 
-                    <img class="loadingImg" src="img/loading.gif" width="64"/>
-                    <p class='loadingText'>Loading Dashboard</p>
-                </div>
-
-                <div class="gridster">
-                    <ul>
-                        <!--<li data-row="1" data-col="1" data-sizex="4" data-sizey="2" class="custom_class">
-                            <div class="heading">
-                                <h1>Writhlington School</h1>
-                                <h1>Dashboard</h1>
-                            </div>
-                        </li> 
-                        <li data-row="1" data-col="1" data-sizex="2" data-sizey="1"><div id="number"><span class="val1"></span></div><br/><div id="sub" class="sub1"></div></li> 
-                        <li data-row="1" data-col="5" data-sizex="2" data-sizey="1"></li> 
-                        <li data-row="1" data-col="3" data-sizex="2" data-sizey="1"><div id="number"><span class="val2"></span></div><br/><div id="sub" class="sub2"></div></li> 
-                        <li data-row="2" data-col="1" data-sizex="1" data-sizey="1"><div id="number"><span class="val3"></span></div><br/><div id="sub" class="sub3"></div></li>
-                        <li data-row="2" data-col="2" data-sizex="2" data-sizey="1"><div id="number"><span class="val4"></span></div><br/><div id="sub" class="sub4"></div></li> 
-                        <li data-row="2" data-col="5" data-sizex="2" data-sizey="1"><div id="number"><span class="val5"></span></div><br/><div id="sub" class="sub5"></div></li>
-                        <li data-row="3" data-col="1" data-sizex="2" data-sizey="1"><div id="number"><span class="val6"></span></div><br/><div id="sub" class="sub6"></div></li>
-                        <li data-row="3" data-col="1" data-sizex="1" data-sizey="1"><div id="number"><span class="val7"></span></div><br/><div id="sub" class="sub7"></div></li>
-                        <li data-row="3" data-col="2" data-sizex="1" data-sizey="1"><div id="number"><span class="val8"></span></div><br/><div id="sub" class="sub8"></div></li>
-                        <li data-row="3" data-col="3" data-sizex="1" data-sizey="1"><div id="number"><span class="val9"></span></div><br/><div id="sub" class="sub9"></div></li> -->
-                    </ul>
-                </div>
-        </div>
+        <div id="titleHeader"></div>
     
         <div id="addModal" class="modal modal-add fade">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Add Widget</h4>
+                <h4 class="modal-title">Create Dashboard</h4>
               </div>
               <div class="modal-body">
             
-                <div class="row-fluid">
-                    <div class="span4">
-                        <label>Widget Type</label>
-                        <div class="colSelect">
-                            <button id="standardButton" type="button" class="btn btn-primary btn-lg btn-block">Standard Widgets</button>
-                            <button id="portalButton" type="button" class="btn btn-danger btn-lg btn-block">Devices</button>
-                        </div>    
-                    </div>
-                    <div class="span4">
-                        <label>Widgets Available</label>
-                        <div class="colSelect withborder">
-                            <ol class="typeSelectable step2List">
-                                <li>Select type</li>
-                            </ol>
-                        </div>
-                    </div>
-                    <div class="span4">
-                        <label class="dynamicStep3">Widgets Preview</label>
-                        <div class="colSelect withborder">
-                            <ol class="typeSelectableLast step3List">
-                            </ol>
-                        </div>
-                    </div>
+		<div id="co"> 
+			<form class="form-horizontal" role="form">
+  				<div class="form-group"">
+    					<label for="dashboardName" class="control-label">Dashboard Name</label>
+    					<div class="col-sm-8">
+      						<input type="email" class="form-control" id="dashboardName" placeholder="Name">
+    					</div>
+  				</div>
 
-                </div>
-
-                <hr/>
-                <div id="widgetPreview" class="row-fluid" style="display=none">
-                     <label>Widget Preview</label>
-                     <div id="widgetPreviewArea"></div>
-                </div>
+  				<div class="form-group">
+   	 				<label for="inputPassword1" class="col-sm-4 control-label">Password</label>
+    					<div class="col-sm-8">
+      						<input type="password" class="form-control" id="inputPassword1" placeholder="Password">
+    					</div>
+  				</div>
+				<div class="form-group">
+    					<label for="inputPassword2" class="col-sm-4 control-label">Retype Password</label>
+    					<div class="col-sm-8">
+      						<input type="password" class="form-control" class="form-control" id="inputPassword2" placeholder="Password">
+    					</div>
+  				</div>
+			</form>
+		</div>
 
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button id="addWidgetButton" type="button" class="btn btn-primary" disabled>Add Widget</button>
+                <button id="addCollectorButton" type="button" class="btn btn-primary">Create</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+	<div id="deleteModal" class="modal modal-add fade">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Delete Dashboard</h4>
+              </div>
+              <div class="modal-body">
+
+		<div class="modal-body-delete"></div>
+		<br/>
+                <form class="form-horizontal" role="form">
+			<div class="form-group">
+                		<label for="delPasswordCheck1" class="col-sm-4 control-label">Password</label>
+                       		<div class="col-sm-8">
+                        		<input type="password" class="form-control" id="delPasswordCheck" placeholder="Password">
+                        	</div>
+                	</div>
+		</form>
+	
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="deleteButton" type="button" class="btn btn-danger">Delete</button>
               </div>
             </div>
           </div>
         </div>
 
     <!-- Scripts for faster loading -->
+
+    <!-- JQuery First! -->
+    <script src="./js/libs/jquery-2.0.3.min.js" type="text/javascript"></script>
+
+    <!-- Remotes -->
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
-    <script src="./js/jquery-2.0.3.min.js" type="text/javascript"></script>
+    <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha3.js"></script>
+    <script src="http://d23cj0cdvyoxg0.cloudfront.net/xivelyjs-1.0.4.min.js"></script>
+    <script src='https://cdn.firebase.com/v0/firebase.js'></script>
     <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 
-    <script src="./js/bootstrap.min.js" type="text/javascript"></script>
-    <script src="http://d23cj0cdvyoxg0.cloudfront.net/xivelyjs-1.0.4.min.js"></script>
-    <script src="./js/jquery.slabtext.min.js"></script>
-    <script src="./js/jquery.gridster.with-extras.min.js"></script>
-    <script type="text/javascript" src="./js/jDistance-0.0.1.js"></script>
-    <script src='https://cdn.firebase.com/v0/firebase.js'></script>
-    <script type="text/javascript" src="../common_assets/functions.js"></script>
-    <script type="text/javascript" src="../common_assets/app.js"></script>
-    <script type="text/javascript" src="../common_assets/add.js"></script>
+    <!-- Locals -->
+    <script src="./js/libs/bootstrap.min.js" type="text/javascript"></script>
+    <script src="./js/libs/jquery.slabtext.min.js"></script>
+    <script src="./js/libs/jquery.gridster.with-extras.min.js"></script>
+    <script src="./js/libs/jDistance-0.0.1.js" type="text/javascript"></script>
+    <script src="./js/dashboard/functions.js" type="text/javascript"></script>
+
+    <script>
+      $("#addButton").click(function(){
+        $('#addModal').modal('show');
+      });
+      
+      var fbase = new Firebase('https://distance-project.firebaseio.com/schools');
+      fbase.on('value', function(snapshot) {
+		    $("#loadingScreen").hide();
+		    $("#toolbox").show();
+		    $("#title").show();
+		    
+        var school_fb = snapshot.val();
+
+    		//Stop the data appending if we manually edit the firebase data for another dashboard
+    		$("#titleHeader").html("");
+    		$("#titleHeader").append("<ul>");
+	
+    		$.each(school_fb, function(k,v){
+    			var addDeleteButton = function(id, stringName){ return "<div style='float: right;' class='delete "+id+"' data-string='" + stringName +"'><img src='./img/delete.png' /></div>"};
+    			var addDashboardEntry = function(id, stringName){ return "<a href='dashboard.html?s="+ id + "'> <div class='heading1'><h2>" + stringName + " Dashboard </h2></div></a>"; };
+    			$("#titleHeader").append("<li><div>");
+    			
+    			if(getUrlVars()["action"] === "delete" || getUrlVars()["action"] === "d" || getUrlVars()["a"] === "d" || getUrlVars()["action"] === "d"){
+    				$("#titleHeader").append(addDeleteButton(k, v.school_id));
+    			}
+    			
+    			$("#titleHeader").append(addDashboardEntry(k, v.school_id));
+    			$("#titleHeader").append("</div></li>");
+    		});
+		
+    		$("#titleHeader").append("</ul>");
+
+    		//Add the delete handler
+    		$(".delete").click(function() {
+    			var delID = $(this).attr("class").replace('delete ', '');
+
+    			// Set the ID to delete
+    			$("#deleteButton").attr('data-id', delID);
+
+    			$(".modal-body-delete").html("Are you really sure you want to delete the <b>" + $(this).attr("data-string") + "</b> dashboard?");
+
+    			// Show the Modal
+    			$("#deleteModal").modal('show');
+
+    			// Enable the click handler for the delete button
+    			$("#deleteButton").click(function(){
+    				var deleteID = $(this).attr("data-id");
+
+    				var checkDel = new Firebase('https://distance-project.firebaseio.com/schools/' + deleteID + "/password" );
+    				checkDel.on('value', function(sshot) {
+    					if(sshot.val() === CryptoJS.SHA3($("#delPasswordCheck").val(), { outputLength: 256 }).toString() ){
+    						fbase.child(deleteID).remove(function(error){
+                                            		if(!error){
+                                                    		$("#deleteModal").modal('hide');
+    								$("#delPasswordCheck").val("");
+                                           			}else{
+                                                    		alert('Remove failed.');
+                                            		}
+                                   		 	});
+    					}
+    				});
+
+    			});
+           		});
+    	});
+    		
+    	$("#addCollectorButton").click(function(){
+    		if($("#dashboardName").val() != "" && $("#dashboardName").val() != "" && $("#inputPassword1").val() != "" && $("#inputPassword2").val() != ""){
+    			if($("#inputPassword1").val() === $("#inputPassword2").val()){
+    				//Add collector				
+    				var dbname = $("#dashboardName").val().toLowerCase().replace(" ","_");
+    				
+    				// Create the default objects for the dasboard
+    				//   -- Put this in a JSON file for easy access at a later date
+
+    				var obj = {
+    					'password': CryptoJS.SHA3($("#inputPassword1").val(), { outputLength: 256 }).toString(),
+    					'school_id': $("#dashboardName").val(),
+    					"widgets" : [ {
+         							 "size_y" : 2,
+          							 "col" : 1,
+          							 "htmlString" : "<div class='heading'><h1>" + $('#dashboardName').val() + "</h1><h1>Dashboard</h1></div>",
+          							 "size_x" : 4,
+          							 "row" : 1
+        						       }, 
+    						       {
+          						       	 "size_y" : 1,
+          							 "col" : 5,
+         	 						 "htmlString" : "<div id=\"number\"><div class=\"time\"></div><br><div id=\"sub\">Current Time</div></div>",
+          							 "size_x" : 2,
+          							 "row" : 1
+        						       }
+    						    ]
+    				};
+
+    				//Add object
+    				fbase.child(dbname).set(obj, function(error) {
+      					if (error) {
+        						alert('Data could not be saved.' + error);
+      					} else {
+    						$('#addModal').modal('hide');
+      					}
+    				});
+
+    				//Clear the fields
+    				$("#dashboardName").val("");
+    				$("#inputPassword1").val("");
+    				$("#inputPassword2").val("");
+    			}
+    		}	
+    	});
+    </script> 
 
 </body> 
 </html>
+
