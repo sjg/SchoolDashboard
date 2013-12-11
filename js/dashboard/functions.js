@@ -10,4 +10,3 @@ function getUrlVars() {
   }
   return vars;
 }
-

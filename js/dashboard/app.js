@@ -3,7 +3,7 @@ var Sensor = function sensor(feedID, streamID, elementID){
     this.stream = streamID;
     this.elementID = elementID;
     this.functionName = undefined;
-} 
+};
 
 var XivelyStreamArray = new Array();
 
@@ -50,7 +50,7 @@ var getData = function(sensorObject){
     xively.feed.get(sensorObject.feed, function (datastream) {
         $.each(datastream.datastreams, function(key, value){
             if(value.id == sensorObject.stream){
-                console.log(value); 
+                console.log(value);
                 symbol = value.unit.symbol == "degC" ? "&deg;" : value.unit.symbol;
                 $(sensorObject.elementID).find("#number").find(".val").html(value.current_value + symbol);
                 $(sensorObject.elementID).find("#sub").html(value.current_value + symbol);
@@ -61,23 +61,22 @@ var getData = function(sensorObject){
 };
 
 var streamLoop = function(){
-    if (XivelyStreamArray.length == 0){ 
-        return false 
-    };
+    if (XivelyStreamArray.length === 0){
+        return false;
+    }
     $.each(XivelyStreamArray,function(k,v){
         // Loop around Stream Array adding values when needed to elements
         console.log(v);
         getData(v);
     });
     return true;
-}
+};
 
 $(function(){
     getTime();
     streamLoop();
 
     setTimeout(slabTextHeadlines, 100);
-    
     setInterval(getTime, 1000);
     // Set up the interval for looping around the stream array
     setInterval(streamLoop, 1000 * 10);
@@ -108,10 +107,10 @@ fb.on('value', function(snapshot){
     var found = 0;
     $.each(msgdata, function(k, v) {
     console.log("Value:" + v);
-	console.log("Key: " + k);
-	console.log(snapshot.name().toLowerCase());
-	console.log((getUrlVars()["s"]).toLowerCase());
-	console.log( snapshot.name().toLowerCase() == (getUrlVars()["s"]).toLowerCase() );
+    console.log("Key: " + k);
+    console.log(snapshot.name().toLowerCase());
+    console.log((getUrlVars()["s"]).toLowerCase());
+    console.log( snapshot.name().toLowerCase() == (getUrlVars()["s"]).toLowerCase() );
 
         if ( snapshot.name().toLowerCase() == (getUrlVars()["s"]).toLowerCase() ) {
             schooldata = msgdata.widgets;
@@ -153,7 +152,7 @@ fb.on('value', function(snapshot){
                     }
             }}).data('gridster');
 
-	    gridster.enable();
+        gridster.enable();
             slabTextHeadlines();
 
             jQuery("#map").Distance({
