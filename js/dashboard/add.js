@@ -113,7 +113,7 @@ $(document).ready(function() {
             $("#widgetPreview").hide();
 
             if(type == "remote"){
-                if(xively != undefined){
+                if(xively !== undefined) {
                     xively.feed.get(feedID, function (datastream) {
                         $(".step3List").html("");
                         $.each(datastream.datastreams, function(k,v){
