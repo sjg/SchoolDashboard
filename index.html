@@ -28,18 +28,18 @@
 
 
 <body>
-	<div id="title" style="display: none;">
-		<h2>Select a Dashboard</h2>
-	</div>
+  <div id="title" style="display: none;">
+    <h2>Select a Dashboard</h2>
+  </div>
 
         <div id="loadingScreen">
-        	<img class="loadingImg" src="img/loading.gif" width="64"/>
-        	<p class='loadingText'>Loading List</p>
+          <img class="loadingImg" src="img/loading.gif" width="64"/>
+          <p class='loadingText'>Loading List</p>
         </div>
-	
-	<div id="toolbox" style="display: none;">
+  
+  <div id="toolbox" style="display: none;">
             <img id="addButton" src="img/add.png" width="32"/>
-        </div>	
+        </div>  
 
         <div id="titleHeader"></div>
     
@@ -52,29 +52,29 @@
               </div>
               <div class="modal-body">
             
-		<div id="co"> 
-			<form class="form-horizontal" role="form">
-  				<div class="form-group"">
-    					<label for="dashboardName" class="control-label">Dashboard Name</label>
-    					<div class="col-sm-8">
-      						<input type="email" class="form-control" id="dashboardName" placeholder="Name">
-    					</div>
-  				</div>
+    <div id="co"> 
+      <form class="form-horizontal" role="form">
+          <div class="form-group">
+              <label for="dashboardName" class="control-label">Dashboard Name</label>
+              <div class="col-sm-8">
+                  <input type="email" class="form-control" id="dashboardName" placeholder="Name">
+              </div>
+          </div>
 
-  				<div class="form-group">
-   	 				<label for="inputPassword1" class="col-sm-4 control-label">Password</label>
-    					<div class="col-sm-8">
-      						<input type="password" class="form-control" id="inputPassword1" placeholder="Password">
-    					</div>
-  				</div>
-				<div class="form-group">
-    					<label for="inputPassword2" class="col-sm-4 control-label">Retype Password</label>
-    					<div class="col-sm-8">
-      						<input type="password" class="form-control" class="form-control" id="inputPassword2" placeholder="Password">
-    					</div>
-  				</div>
-			</form>
-		</div>
+          <div class="form-group">
+            <label for="inputPassword1" class="col-sm-4 control-label">Password</label>
+              <div class="col-sm-8">
+                  <input type="password" class="form-control" id="inputPassword1" placeholder="Password">
+              </div>
+          </div>
+        <div class="form-group">
+              <label for="inputPassword2" class="col-sm-4 control-label">Retype Password</label>
+              <div class="col-sm-8">
+                  <input type="password" class="form-control" class="form-control" id="inputPassword2" placeholder="Password">
+              </div>
+          </div>
+      </form>
+    </div>
 
               </div>
               <div class="modal-footer">
@@ -86,7 +86,7 @@
         </div>
 
 
-	<div id="deleteModal" class="modal modal-add fade">
+  <div id="deleteModal" class="modal modal-add fade">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
@@ -95,17 +95,17 @@
               </div>
               <div class="modal-body">
 
-		<div class="modal-body-delete"></div>
-		<br/>
+    <div class="modal-body-delete"></div>
+    <br/>
                 <form class="form-horizontal" role="form">
-			<div class="form-group">
-                		<label for="delPasswordCheck1" class="col-sm-4 control-label">Password</label>
-                       		<div class="col-sm-8">
-                        		<input type="password" class="form-control" id="delPasswordCheck" placeholder="Password">
-                        	</div>
-                	</div>
-		</form>
-	
+      <div class="form-group">
+                    <label for="delPasswordCheck1" class="col-sm-4 control-label">Password</label>
+                          <div class="col-sm-8">
+                            <input type="password" class="form-control" id="delPasswordCheck" placeholder="Password">
+                          </div>
+                  </div>
+    </form>
+  
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -141,112 +141,111 @@
       
       var fbase = new Firebase('https://distance-project.firebaseio.com/schools');
       fbase.on('value', function(snapshot) {
-		    $("#loadingScreen").hide();
-		    $("#toolbox").show();
-		    $("#title").show();
-		    
+        $("#loadingScreen").hide();
+        $("#toolbox").show();
+        $("#title").show();
+        
         var school_fb = snapshot.val();
 
-    		//Stop the data appending if we manually edit the firebase data for another dashboard
-    		$("#titleHeader").html("");
-    		$("#titleHeader").append("<ul>");
-	
-    		$.each(school_fb, function(k,v){
-    			var addDeleteButton = function(id, stringName){ return "<div style='float: right;' class='delete "+id+"' data-string='" + stringName +"'><img src='./img/delete.png' /></div>"};
-    			var addDashboardEntry = function(id, stringName){ return "<a href='dashboard.html?s="+ id + "'> <div class='heading1'><h2>" + stringName + " Dashboard </h2></div></a>"; };
-    			$("#titleHeader").append("<li><div>");
-    			
-    			if(getUrlVars()["action"] === "delete" || getUrlVars()["action"] === "d" || getUrlVars()["a"] === "d" || getUrlVars()["action"] === "d"){
-    				$("#titleHeader").append(addDeleteButton(k, v.school_id));
-    			}
-    			
-    			$("#titleHeader").append(addDashboardEntry(k, v.school_id));
-    			$("#titleHeader").append("</div></li>");
-    		});
-		
-    		$("#titleHeader").append("</ul>");
+        //Stop the data appending if we manually edit the firebase data for another dashboard
+        $("#titleHeader").html("");
+        $("#titleHeader").append("<ul>");
 
-    		//Add the delete handler
-    		$(".delete").click(function() {
-    			var delID = $(this).attr("class").replace('delete ', '');
+        $.each(school_fb, function(k,v){
+          var addDeleteButton = function(id, stringName){ return "<div style='float: right;' class='delete "+id+"' data-string='" + stringName +"'><img src='./img/delete.png' /></div>"};
+          var addDashboardEntry = function(id, stringName){ return "<a href='dashboard.html?s="+ id + "'> <div class='heading1'><h2>" + stringName + " Dashboard </h2></div></a>"; };
+          $("#titleHeader").append("<li><div>");
+          
+          if(getUrlVars()["action"] === "delete" || getUrlVars()["action"] === "d" || getUrlVars()["a"] === "d" || getUrlVars()["action"] === "d"){
+            $("#titleHeader").append(addDeleteButton(k, v.school_id));
+          }
+          
+          $("#titleHeader").append(addDashboardEntry(k, v.school_id));
+          $("#titleHeader").append("</div></li>");
+        });
+    
+        $("#titleHeader").append("</ul>");
 
-    			// Set the ID to delete
-    			$("#deleteButton").attr('data-id', delID);
+        //Add the delete handler
+        $(".delete").click(function() {
+          var delID = $(this).attr("class").replace('delete ', '');
 
-    			$(".modal-body-delete").html("Are you really sure you want to delete the <b>" + $(this).attr("data-string") + "</b> dashboard?");
+          // Set the ID to delete
+          $("#deleteButton").attr('data-id', delID);
 
-    			// Show the Modal
-    			$("#deleteModal").modal('show');
+          $(".modal-body-delete").html("Are you really sure you want to delete the <b>" + $(this).attr("data-string") + "</b> dashboard?");
 
-    			// Enable the click handler for the delete button
-    			$("#deleteButton").click(function(){
-    				var deleteID = $(this).attr("data-id");
+          // Show the Modal
+          $("#deleteModal").modal('show');
 
-    				var checkDel = new Firebase('https://distance-project.firebaseio.com/schools/' + deleteID + "/password" );
-    				checkDel.on('value', function(sshot) {
-    					if(sshot.val() === CryptoJS.SHA3($("#delPasswordCheck").val(), { outputLength: 256 }).toString() ){
-    						fbase.child(deleteID).remove(function(error){
-                                            		if(!error){
-                                                    		$("#deleteModal").modal('hide');
-    								$("#delPasswordCheck").val("");
-                                           			}else{
-                                                    		alert('Remove failed.');
-                                            		}
-                                   		 	});
-    					}
-    				});
+          // Enable the click handler for the delete button
+          $("#deleteButton").click(function(){
+            var deleteID = $(this).attr("data-id");
 
-    			});
-           		});
-    	});
-    		
-    	$("#addCollectorButton").click(function(){
-    		if($("#dashboardName").val() != "" && $("#dashboardName").val() != "" && $("#inputPassword1").val() != "" && $("#inputPassword2").val() != ""){
-    			if($("#inputPassword1").val() === $("#inputPassword2").val()){
-    				//Add collector				
-    				var dbname = $("#dashboardName").val().toLowerCase().replace(" ","_");
-    				
-    				// Create the default objects for the dasboard
-    				//   -- Put this in a JSON file for easy access at a later date
+            var checkDel = new Firebase('https://distance-project.firebaseio.com/schools/' + deleteID + "/password" );
+            checkDel.on('value', function(sshot) {
+              if(sshot.val() === CryptoJS.SHA3($("#delPasswordCheck").val(), { outputLength: 256 }).toString() ){
+                fbase.child(deleteID).remove(function(error){
+                    if(!error){
+                        $("#deleteModal").modal('hide');
+                        $("#delPasswordCheck").val("");
+                    } else {
+                        alert('Remove failed.');
+                    }
+                });
+              }
+            });
 
-    				var obj = {
-    					'password': CryptoJS.SHA3($("#inputPassword1").val(), { outputLength: 256 }).toString(),
-    					'school_id': $("#dashboardName").val(),
-    					"widgets" : [ {
-         							 "size_y" : 2,
-          							 "col" : 1,
-          							 "htmlString" : "<div class='heading'><h1>" + $('#dashboardName').val() + "</h1><h1>Dashboard</h1></div>",
-          							 "size_x" : 4,
-          							 "row" : 1
-        						       }, 
-    						       {
-          						       	 "size_y" : 1,
-          							 "col" : 5,
-         	 						 "htmlString" : "<div id=\"number\"><div class=\"time\"></div><br><div id=\"sub\">Current Time</div></div>",
-          							 "size_x" : 2,
-          							 "row" : 1
-        						       }
-    						    ]
-    				};
+          });
+              });
+      });
+        
+      $("#addCollectorButton").click(function(){
+        if($("#dashboardName").val() != "" && $("#dashboardName").val() != "" && $("#inputPassword1").val() != "" && $("#inputPassword2").val() != ""){
+          if($("#inputPassword1").val() === $("#inputPassword2").val()){
+            //Add collector       
+            var dbname = $("#dashboardName").val().toLowerCase().replace(" ","_");
+            
+            // Create the default objects for the dasboard
+            //   -- Put this in a JSON file for easy access at a later date
 
-    				//Add object
-    				fbase.child(dbname).set(obj, function(error) {
-      					if (error) {
-        						alert('Data could not be saved.' + error);
-      					} else {
-    						$('#addModal').modal('hide');
-      					}
-    				});
+            var obj = {
+              'password': CryptoJS.SHA3($("#inputPassword1").val(), { outputLength: 256 }).toString(),
+              'school_id': $("#dashboardName").val(),
+              "widgets" : [ {
+                       "size_y" : 2,
+                         "col" : 1,
+                         "htmlString" : "<div class='heading'><h1>" + $('#dashboardName').val() + "</h1><h1>Dashboard</h1></div>",
+                         "size_x" : 4,
+                         "row" : 1
+                           }, 
+                       {
+                               "size_y" : 1,
+                         "col" : 5,
+                       "htmlString" : "<div id=\"number\"><div class=\"time\"></div><br><div id=\"sub\">Current Time</div></div>",
+                         "size_x" : 2,
+                         "row" : 1
+                           }
+                    ]
+            };
 
-    				//Clear the fields
-    				$("#dashboardName").val("");
-    				$("#inputPassword1").val("");
-    				$("#inputPassword2").val("");
-    			}
-    		}	
-    	});
+            //Add object
+            fbase.child(dbname).set(obj, function(error) {
+                if (error) {
+                    alert('Data could not be saved.' + error);
+                } else {
+                $('#addModal').modal('hide');
+                }
+            });
+
+            //Clear the fields
+            $("#dashboardName").val("");
+            $("#inputPassword1").val("");
+            $("#inputPassword2").val("");
+          }
+        } 
+      });
     </script> 
 
 </body> 
 </html>
-
