@@ -5,7 +5,7 @@ var editToggle = 0;
 
 $(document).ready(function() {
     $("#addButton").click( function(){
-        $('#addModal').modal('toggle');
+        $('#addModal').modal('show');
         $("#widgetPreview").hide();
     });
     $("#editButton").click( function(){
