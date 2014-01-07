@@ -4,6 +4,8 @@ var components = "../common_assets/components.json";
 var editToggle = 0;
 
 $(document).ready(function() {
+    $("#toolbox").hide();
+
     $("#addButton").click( function(){
         $('#addModal').modal('toggle');
         $("#widgetPreview").hide();
