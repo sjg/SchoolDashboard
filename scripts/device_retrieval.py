@@ -105,8 +105,8 @@ unique_school_names = set(master_schools.keys())
 
 matched = [entry for entry in output if entry['locationName'] in unique_school_names]
 unmatched = [entry for entry in output if entry['locationName'] not in unique_school_names]
-with_coords = [entry for entry in output if entry.get('lat') \
-    and entry.get('lng')\
+with_coords = [entry for entry in output if entry.get('lat')
+    and entry.get('lng') \
     and entry['locationName'] not in unique_school_names]
 for school in with_coords:
     for name, coords in master_schools.items():
