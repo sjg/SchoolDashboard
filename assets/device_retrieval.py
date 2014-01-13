@@ -4,14 +4,18 @@ into a suitable output JSON
 
 writes a file, devices.json, into the dir the script is run from
 
-author: Stephan Hugel
-email: 
-revision: 0.5
-"""
+Note that timestamp is UTC
 
+author: Stephan Hugel
+email: stephan.hugel.12@ucl.ac.uk
+revision: 0.6
+"""
 
 import urllib2
 import json
+from datetime import datetime
+
+
 base = "http://iostp.org:8080"
 req = urllib2.urlopen(base + "/cat/feeds")
 res = json.loads(req.read())
@@ -68,7 +72,8 @@ def test_circle(centre_y, centre_x, test_y, test_x):
 output = []
 wanted_keys = set(mapping.keys())
 for feed in res[u'items']:
-    available_keys = wanted_keys.intersection(set([value[u'rel'] for value in feed[u'i-object-metadata']]))
+    available_keys = wanted_keys.intersection(
+        set([value[u'rel'] for value in feed[u'i-object-metadata']]))
     output_keys = [mapping.get(av_key) for av_key in list(available_keys)]
     output_values = []
     for k in list(available_keys):
@@ -108,7 +113,8 @@ unique_school_names = set(master_schools.keys())
 
 matched = [entry for entry in output if entry['locationName'] in unique_school_names]
 unmatched = [entry for entry in output if entry['locationName'] not in unique_school_names]
-with_coords = [entry for entry in output if entry.get('lat') and entry.get('lng') and entry['locationName'] not in unique_school_names]
+with_coords = [entry for entry in output if
+    entry.get('lat') and entry.get('lng') and entry['locationName'] not in unique_school_names]
 for school in with_coords:
     for name, coords in master_schools.items():
         if test_circle(coords['lat'], coords['lng'], school['lat'], school['lng']):
@@ -125,7 +131,9 @@ for entry in combined:
     except urllib2.HTTPError:
         entry['sensor_count'] = 0
 
+# format the output dict
 output_dict = {
+    "timestamp": datetime.isoformat(datetime.utcnow().replace(microsecond=0)),
     "total_sensors": 0,
     "total_sensors_live": 0,
     "total_sensors_frozen": 0,
@@ -139,26 +147,35 @@ output_dict = {
 }
 
 output_dict['total_sensors'] = sum([feed['sensor_count'] for feed in combined])
-output_dict['total_sensors_live'] = sum([feed['sensor_count'] for feed in combined if feed['status'] == 'live'])
-output_dict['total_sensors_frozen'] = sum([feed['sensor_count'] for feed in combined if feed['status'] == 'frozen'])
+output_dict['total_sensors_live'] = sum([feed['sensor_count'] for
+    feed in combined if feed['status'] == 'live'])
+output_dict['total_sensors_frozen'] = sum([feed['sensor_count'] for
+    feed in combined if feed['status'] == 'frozen'])
 output_dict['total_devices'] = len(combined)
-output_dict['total_devices_live'] = len([f for f in combined if f['status'] == 'live'])
-output_dict['total_devices_frozen'] = len([f for f in combined if f['status'] == 'frozen'])
+output_dict['total_devices_live'] = len([s for s in combined if s['status'] == 'live'])
+output_dict['total_devices_frozen'] = len([s for s in combined if s['status'] == 'frozen'])
 output_dict['locations'] = len(set([c['locationName'] for c in combined]))
 
+# write individual school data
 for entry in unique_school_names:
     output_dict['school_data'].append({
         "name": entry,
-        'sensors': int(sum([feed['sensor_count'] for feed in combined if feed['locationName'] == entry])),
-        'sensors_live': int(sum([feed['sensor_count'] for feed in combined if feed['status'] == 'live' and feed['locationName'] == entry])),
-        'sensors_frozen': int(sum([feed['sensor_count'] for feed in combined if feed['status'] == 'frozen' and feed['locationName'] == entry])),
+        'sensors': int(sum([feed['sensor_count'] for
+            feed in combined if feed['locationName'] == entry])),
+        'sensors_live': int(sum([feed['sensor_count'] for
+            feed in combined if feed['status'] == 'live' and feed['locationName'] == entry])),
+        'sensors_frozen': int(sum([feed['sensor_count'] for
+            feed in combined if feed['status'] == 'frozen' and feed['locationName'] == entry])),
         'devices': len([c for c in combined if c['locationName'] == entry]),
-        'devices_live': len([f for f in combined if f['status'] == 'live' and f['locationName'] == entry]),
-        'devices_frozen': len([f for f in combined if f['status'] == 'frozen' and f['locationName'] == entry]),
+        'devices_live': len([s for
+            s in combined if s['status'] == 'live' and s['locationName'] == entry]),
+        'devices_frozen': len([s for
+            s in combined if s['status'] == 'frozen' and s['locationName'] == entry]),
         "location": {
             "lat": master_schools[entry]['lat'],
             "lng": master_schools[entry]['lng']
         }
     })
+
 with open("/home/sjg_ios/dashboard.iotschool.org/assets/data/devices.json", "w") as o:
     o.write(json.dumps(output_dict))
