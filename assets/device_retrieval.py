@@ -116,16 +116,16 @@ unmatched = [entry for entry in output if entry['locationName'] not in unique_sc
 with_coords = [entry for entry in output if
     entry.get('lat') and entry.get('lng') and entry['locationName'] not in unique_school_names]
 for school in with_coords:
-    matched = False
+    match = False
     for name, coords in master_schools.items():
-        if matched:
+        if match:
             break
         if test_circle(coords['lat'], coords['lng'], school['lat'], school['lng']):
             school['locationName'] = name
             school['lat'] = coords['lat']
             school['lng'] = coords['lng']
             matched = True
-    if not matched:
+    if not match:
         school['locationName'] = 'Other'
 
 combined = matched + with_coords
