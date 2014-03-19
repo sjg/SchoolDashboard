@@ -124,7 +124,7 @@ for school in with_coords:
             school['locationName'] = name
             school['lat'] = coords['lat']
             school['lng'] = coords['lng']
-            matched = True
+            match = True
     if not match:
         school['locationName'] = 'Other'
 
