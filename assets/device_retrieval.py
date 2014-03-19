@@ -66,8 +66,7 @@ def fix_coords(entry):
 def test_circle(centre_y, centre_x, test_y, test_x):
     """ Test whether a point falls inside or on a circle """
     # 0.001 = 111.32m in decimal degrees, so the circle has a diameter of ~1km
-    # radius = 0.0045
-    radius = 0.030
+    radius = 0.100
     return (test_x - centre_x) ** 2 + (test_y - centre_y) ** 2 <= radius ** 2
 
 output = []
@@ -117,13 +116,18 @@ unmatched = [entry for entry in output if entry['locationName'] not in unique_sc
 with_coords = [entry for entry in output if
     entry.get('lat') and entry.get('lng') and entry['locationName'] not in unique_school_names]
 for school in with_coords:
+    matched = False
     for name, coords in master_schools.items():
+        if matched:
+            break
         if test_circle(coords['lat'], coords['lng'], school['lat'], school['lng']):
             school['locationName'] = name
             school['lat'] = coords['lat']
             school['lng'] = coords['lng']
-        else:
-            school['locationName'] = 'Other'
+            matched = True
+    if not matched:
+        school['locationName'] = 'Other'
+
 combined = matched + with_coords
 # Retrieve sensor count for each device
 for entry in combined:
