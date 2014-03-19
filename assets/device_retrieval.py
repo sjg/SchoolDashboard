@@ -66,7 +66,8 @@ def fix_coords(entry):
 def test_circle(centre_y, centre_x, test_y, test_x):
     """ Test whether a point falls inside or on a circle """
     # 0.001 = 111.32m in decimal degrees, so the circle has a diameter of ~1km
-    radius = 0.0045
+    # radius = 0.0045
+    radius = 0.030
     return (test_x - centre_x) ** 2 + (test_y - centre_y) ** 2 <= radius ** 2
 
 output = []
